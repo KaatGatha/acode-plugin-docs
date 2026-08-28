@@ -7,7 +7,7 @@
 	},
 	"files": {
 		"ignoreUnknown": false,
-		"includes": ["**", "!.vitepress/cache/**"]
+		"includes": ["**", "!.vitepress/cache/**", "!.vitepress/dist/**", "!dist/**", "!node_modules/**"]
 	},
 	"formatter": {
 		"enabled": true,
