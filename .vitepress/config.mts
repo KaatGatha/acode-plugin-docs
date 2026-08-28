@@ -201,12 +201,20 @@ export default defineConfig({
 									link: "/docs/utilities/commands",
 								},
 								{
+									text: "CodeMirror packages",
+									link: "/docs/utilities/codemirror",
+								},
+								{
 									text: "Editor Languages",
 									link: "/docs/utilities/ace-modes",
 								},
 								{
 									text: "Editor Themes",
 									link: "/docs/utilities/editor-themes",
+								},
+								{
+									text: "Code Highlight",
+									link: "/docs/utilities/code-highlight",
 								},
 								{
 									text: "Encoding",

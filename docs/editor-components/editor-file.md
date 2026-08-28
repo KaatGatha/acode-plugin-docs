@@ -51,7 +51,13 @@ Both methods are equivalent and accept & return the same parameters.
 | tabIcon | `string` | Icon class for the file tab | `'file file_type_default'` |
 | content | string \|  [HTMLElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement) | Custom content element or HTML string. Strings are sanitized using DOMPurify | - |
 | stylesheets | `string\|string[]` | Custom stylesheets for tab. Can be URL, or CSS string | - |
+| highlightStyles | `boolean` | Adopt the static CodeMirror highlight stylesheet into this custom tab's shadow root. Use only when the tab will render `codeHighlight` HTML. Available from **versionCode `1008`** | `false` |
 | hideQuickTools | `boolean` | Whether to hide quicktools for this tab | `false` |
+| pinned | `boolean` | Pin the tab to prevent accidental closing | `false` |
+| readOnly | `boolean` | Open the file as read-only | `false` |
+| paneId | `string` | Target editor pane id (multi-pane layout) | - |
+| pane | `object` | Target editor pane instance (multi-pane layout) | - |
+| isPanePlaceholder | `boolean` | Temporary empty tab for an empty pane | `false` |
 
 ## Properties
 
@@ -325,8 +331,26 @@ file1.addStyle('/styles/additional.css');
 ```
 
 ::: warning
-Custom Editor Tabs are isolated from main dom using shadow dom, so don't select tab elements using main DOM(`document`).
+Custom Editor Tabs are isolated from main DOM using Shadow DOM, so don't select tab elements using `document`.
 :::
+
+Syntax highlighting inside a custom tab is opt-in and available from **versionCode `1008`**. Set `highlightStyles: true` so the tab's shadow root gets the theme stylesheet, then add the `cm-highlighted` class to the wrapper. See [Code Highlight](../utilities/code-highlight.md).
+
+```js
+const codeHighlight = acode.require("codeHighlight");
+const html = await codeHighlight.highlightCodeBlock(source, "javascript");
+
+const code = document.createElement("code");
+code.className = codeHighlight.HIGHLIGHT_CLASS;
+code.innerHTML = html;
+
+new EditorFile("snippet.js", {
+  type: "custom",
+  content: code,
+  highlightStyles: true,
+  hideQuickTools: true,
+});
+```
 
 ### Saving File Changes
 

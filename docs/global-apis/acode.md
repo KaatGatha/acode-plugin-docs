@@ -310,6 +310,7 @@ acode.clearBrokenPluginMark("com.example.plugin");
 
 - Commands API (preferred for adding/removing commands): [Commands](../utilities/commands.md)
 - CodeMirror editor theme API: [Editor Themes](../utilities/editor-themes.md)
+- Static CodeMirror highlighter (versionCode `1008+`): [Code Highlight](../utilities/code-highlight.md)
 - Language server API: [LSP](../advanced-apis/lsp.md)
 - File handler API: [File Handlers](../advanced-apis/file-handlers.md)
 - Terminal API: [Terminal](../advanced-apis/terminal.md)

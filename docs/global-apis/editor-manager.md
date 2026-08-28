@@ -2,40 +2,27 @@
 
 ## `window.editorManager` or `editorManager`
 
-The `editorManager` allows to interact with the Editor Instance and listen to various events of Acode app with the help of various methods and Properties. Basically for interacting with the opened files and tabs.
+The `editorManager` allows you to interact with the editor instance and listen to app-level editor events. Use it for open files/tabs, multi-pane layout, and the active CodeMirror view.
 
-## Methods and Properties
+## Core properties
 
 ### `editor`
-This is the active **CodeMirror `EditorView`** instance.
+
+Active **CodeMirror `EditorView`** for the focused pane.
 
 Read text:
+
 ```javascript
 const text = editorManager.editor.state.doc.toString();
 ```
 
 Update text:
+
 ```javascript
 const view = editorManager.editor;
 view.dispatch({
   changes: { from: 0, to: view.state.doc.length, insert: "new content" },
 });
-```
-
-Add a command:
-```javascript
-// Compatibility API
-editorManager.editor.commands.addCommand({
-  name: "my-command",
-  description: "My command",
-  exec: () => console.log("Run"),
-});
-```
-
-Remove a command:
-```javascript
-// Compatibility API
-editorManager.editor.commands.removeCommand("my-command");
 ```
 
 ::: tip
@@ -45,7 +32,7 @@ See: [Commands API](../utilities/commands.md)
 
 Compatibility helpers are also available for legacy plugins:
 
-- `editor.session` (Ace-style session proxy for active file)
+- `editor.session` (Ace-style session proxy for the active file)
 - `editor.getValue()`
 - `editor.gotoLine(...)`
 - `editor.insert(text)`
@@ -54,77 +41,194 @@ Compatibility helpers are also available for legacy plugins:
 - `editor.selection.getRange()`
 - `editor.getCopyText()`
 
-### `addNewFile(filename?:string, options?: object)` 
-This function adds a new file to the workspace.
+### `isCodeMirror: boolean`
 
-  - `filename: string`: the name of the file.
-  - `options?: object`: an optional object that can be passed with the following properties:
-    - `text: string`: the file text content.
-    - `isUnsaved: boolean`: whether the file is unsaved.
-    - `render: boolean`: whether to switch to this file.
-    - `id: string`: a unique id for the file.
-    - `uri: string`: the file's uri, or location.
-    - `record`: Record
-    - `deletedFile: boolean`: whether the file is deleted.
-    - `readOnly: boolean`: whether the file is read-only
-    - `mode: string`: the SAF (Storage access framework) mode (TREE | SINGLE).
-    - `type: string`: the file type (regular | git | gist).
-    - `encoding: string`: the file encoding.
-    - `onsave: ()=>void`: callback function called when the file is saved.
+`true` on modern Acode builds that use CodeMirror 6.
 
-### `getFile(test: any, type: string)` 
-This function gets files from the list of opened files.
-  * `test: object`: the file id, uri, repo, or gist to find the file.
-  * `type: string`: the type of test (uri | id | name | git | gist).
+### `activeFile: EditorFile | null`
 
-### `switchFile(id: string)` 
-This function switches the tab to the given file id.
+Currently focused file/tab.
 
-### `activeFile: object` 
-This property returns the current file data as object.
+### `files: EditorFile[]`
 
-### `hasUnsavedFiles(): number` 
-This function returns the number of unsaved files.
+All open files across every pane.
 
-### `files: Array<object>` 
-This property returns a list of all files.
+### `container: HTMLElement`
 
-### `setSubText(file: File)` 
-This function sets the sub text of the header, i.e. the location of the file.
+Editor container of the **active pane**. Prefer this over assuming a single global editor DOM node when split panes are open.
 
-### `container: HTMLElement` 
-This property returns the container of the editor.
+### `header`
 
-### `on(event: string, listener(): void)` 
-This function adds a listener for the specified event.
+Editor header tile. You can set subtitle text with `editorManager.header.subText = "..."`.
 
-### `off(event: string, listener(): void)` 
-This function removes a listener for the specified event.
+### `openFileList: HTMLElement`
 
-### `emit(event: string, ...args: ...any)` 
-This function emits an event with the specified arguments.
+Open-file tab list (pane-aware when multi-pane layout is active).
 
-### `isScrolling: boolean` 
-Weather the editor is currently scrolling.
+### `isScrolling: boolean`
 
-## List of events:
+Whether the active editor is currently scrolling.
 
-* `switch-file`
-* `rename-file`
-* `save-file`
-* `file-loaded`
-* `file-content-changed`
-* `add-folder`
-* `remove-folder`
-* `new-file`
-* `init-open-file-list`
-* `update`
+## Opening files
 
-Here is an example on how to listen to an example event:
+There is no `editorManager.addNewFile` API. Create tabs with:
+
 ```javascript
-function listener(){
-  console.log("user has switched a file")
-}
+const EditorFile = acode.require("EditorFile");
 
-editorManager.on("switch-file", listener) // listens to file switch event
+// Preferred
+new EditorFile("example.js", {
+  text: "console.log('hi')",
+  render: true,
+});
+
+// Or via acode
+acode.newEditorFile("example.js", {
+  text: "console.log('hi')",
+  render: true,
+});
+```
+
+See [Editor File](../editor-components/editor-file.md) for full options (`pinned`, `paneId`, custom tabs, etc.).
+
+### `addFile(file: EditorFile)`
+
+Registers an already-constructed `EditorFile` instance with the manager (used internally and by advanced plugins).
+
+### `getFile(test, type)`
+
+Finds an open file.
+
+- `test`: id, uri, name, git, or gist key
+- `type`: `"uri" | "id" | "name" | "git" | "gist"`
+
+### `switchFile(id: string)`
+
+Switches the active tab to the given file id.
+
+### `hasUnsavedFiles(): number`
+
+Returns the number of unsaved files.
+
+## Multi-pane layout
+
+Acode supports side-by-side / stacked editor panes. Each pane has its own CodeMirror instance, tab list, and active file.
+
+### Properties
+
+| Property | Description |
+|---|---|
+| `activePane` | Currently focused pane |
+| `panes` | Array snapshot of all panes |
+| `activePaneTabList` | Tab list element for the active pane |
+
+### Creating and closing panes
+
+```javascript
+// Split active pane to the right
+const right = await editorManager.splitPaneRight();
+
+// Split below
+const below = await editorManager.splitPaneDown();
+
+// Or with options
+const pane = await editorManager.createPane({
+  direction: "horizontal", // "horizontal" | "vertical" | "right" | "down" | "below"
+  moveFile: editorManager.activeFile, // optional: move current file into the new pane
+  createUntitled: true, // default true when moveFile is not set
+});
+
+// Close panes
+editorManager.closeActivePane();
+editorManager.closeEmptyPane(pane);
+```
+
+`createPane` / `splitPane*` resolve to the new pane object, or `null` when there is not enough space.
+
+### Focusing panes
+
+```javascript
+editorManager.focusNextPane();
+editorManager.focusPreviousPane();
+editorManager.focusPaneByDirection("left"); // "left" | "right" | "up" | "down"
+editorManager.setActivePane(pane);
+```
+
+### Moving files between panes
+
+```javascript
+await editorManager.moveActiveFileToNewPane("vertical");
+
+editorManager.moveFileToPane(file, targetPane, {
+  activate: true,
+});
+
+editorManager.removeFileFromPane(file);
+editorManager.getFilePane(file); // pane hosting the file, or null
+editorManager.getPaneFiles(pane); // files in a pane
+```
+
+### Pin helpers
+
+Pinned tabs stay grouped at the front of a pane's tab list:
+
+```javascript
+file.setPinnedState(true, { reorder: true });
+editorManager.moveFileByPinnedState(file);
+editorManager.normalizePinnedTabOrder(pane);
+```
+
+## Tab history
+
+```javascript
+editorManager.openPreviousEditorFromHistory();
+editorManager.openNextEditorFromHistory();
+editorManager.recordHistory(file); // usually automatic on switch
+```
+
+## LSP / cache helpers
+
+```javascript
+// Restart language clients for the active editor file
+editorManager.restartLsp();
+
+// Flush pending crash-cache writes for open editor files
+await editorManager.flushCacheWrites();
+```
+
+## Events
+
+### `on(event, listener)` / `off(event, listener)` / `emit(event, ...args)`
+
+| Event | Description |
+|---|---|
+| `switch-file` | Active file changed |
+| `rename-file` | File renamed |
+| `save-file` | File saved |
+| `file-loaded` | File finished loading |
+| `file-content-changed` | File content changed |
+| `add-folder` | Workspace folder added |
+| `remove-folder` | Workspace folder removed |
+| `update-folder` | Workspace folder updated |
+| `new-file` | New file created |
+| `init-open-file-list` | Open file list initialized |
+| `remove-file` | File removed |
+| `update` | Generic update (often with a sub-action) |
+
+`update` listeners may receive a sub-action as the first argument, for example:
+
+- `"pin-tab"`
+- `"switch-file"`
+- `"read-only"`
+
+```javascript
+editorManager.on("switch-file", () => {
+  console.log("user switched file", editorManager.activeFile?.filename);
+});
+
+editorManager.on("update", (action, file) => {
+  if (action === "pin-tab") {
+    console.log("pin state changed", file?.filename, file?.pinned);
+  }
+});
 ```

@@ -28,15 +28,28 @@ In this example, the color picker dialog box will open with the default color se
 
 ## Returns
 
-The `colorPicker` component returns a promise that resolves to a string representing the `selected color`. This color can then be used in your plugin based on user input.
+The `colorPicker` component returns a promise that:
+
+- **resolves** to a string representing the selected color (hex / rgb / hsl, including alpha when used)
+- **rejects** with `Error("cancelled")` when the user taps Cancel, the mask, or otherwise dismisses the dialog
+
+The dialog also includes a format toggle (HEX / RGB / HSL).
 
 ## Example
 
 ```javascript:line-numbers{1,3}
 const colorPicker = acode.require('colorPicker');
 
-let selectedColor = await colorPicker('#ff0000');
-console.log(`Selected Color: ${selectedColor}`);
+try {
+  const selectedColor = await colorPicker('#ff0000');
+  console.log(`Selected Color: ${selectedColor}`);
+} catch (err) {
+  if (err?.message === 'cancelled') {
+    console.log('User cancelled the color picker');
+  } else {
+    throw err;
+  }
+}
 ```
 
-In this example, the `colorPicker` component is used to open a color picker dialog box with the default color set to red. The selected color is then logged to the console, demonstrating how to retrieve and utilize the user's color selection.
+In this example, the `colorPicker` component opens with red as the default. The selected color is logged, or cancellation is handled explicitly.
