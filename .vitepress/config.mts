@@ -363,7 +363,7 @@ export default defineConfig({
 	},
 	themeConfig: {
 		// https://vitepress.dev/reference/default-theme-config
-		logo: "/acode.png",
+		logo: "/logo.jpeg",
 		footer: {
 			message: "Released under the MIT License.",
 			copyright:
