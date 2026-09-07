@@ -16,7 +16,9 @@ Available from **versionCode `1002`**. Set `"minVersionCode": 1002` in `plugin.j
 | Large workspaces | Heavy WebView tree | Paginated native queries |
 | Search | App-side workers | Optional native streaming search |
 
+::: warning Deprecated
 `acode.require("fileList")` is **deprecated**. It now contains files from **non-native providers only**. Plugins that need SAF or `file://` files must migrate to `fileIndex`.
+:::
 
 ## Import
 
@@ -275,6 +277,8 @@ Query and search results use flat records (not nested `Tree` objects):
 
 ## Migrating from `fileList`
 
+::: details Migrating from fileList
+
 ### Before (deprecated)
 
 ```js
@@ -339,6 +343,7 @@ for (const file of fileList()) {
   remoteFiles.push(file);
 }
 ```
+:::
 
 ## Events
 
