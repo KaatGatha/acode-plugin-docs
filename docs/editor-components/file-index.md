@@ -181,7 +181,7 @@ Start a native streaming search or replace.
 const { id, result, cancel } = fileIndex.search(
   {
     roots: [workspaceUrl],
-    search: "TODO",
+    search: "mySearchPattern",
     options: { caseSensitive: false },
     batchResults: true,
   },
