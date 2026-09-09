@@ -1,0 +1,3 @@
+## 2024-05-24 - Focus States on Custom Classes
+**Learning:** Custom CSS classes like `.link` in themes often lack keyboard accessibility focus states (`:focus-visible`) and visual transitions, making navigation jarring for keyboard users.
+**Action:** When adding or overriding custom interactive classes in Vitepress themes, always add explicit `:focus-visible` styles with sufficient contrast and smooth `transition` properties.
