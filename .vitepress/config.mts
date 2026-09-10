@@ -367,7 +367,7 @@ export default defineConfig({
 		footer: {
 			message: "Released under the MIT License.",
 			copyright:
-				'Copyright © 2025 <a class="link" href="//acode.app">Acode</a>',
+				'Copyright © 2025 <a class="link" href="//acode.app" target="_blank" rel="noopener noreferrer" aria-label="Acode website (opens in a new tab)">Acode</a>',
 		},
 		search: {
 			provider: "local",
