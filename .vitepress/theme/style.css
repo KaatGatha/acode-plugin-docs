@@ -71,3 +71,12 @@
 	filter: blur(10px);
 	z-index: -1; /* Ensure the gradient is behind the logo */
 }
+kbd {
+	background-color: var(--vp-c-bg-mute);
+	border: 1px solid var(--vp-c-divider);
+	border-bottom-width: 2px;
+	border-radius: 4px;
+	padding: 0.15em 0.4em;
+	font-size: 0.9em;
+	font-family: inherit;
+}
