@@ -14,7 +14,7 @@ QuickTools contains useful symbols and keys that are frequently needed while cod
 
 - Brackets: `( ) [ ] { } < >`
 - Symbols: `; : " ' = + -`
-- Special keys: `Tab`, `Ctrl`, `Esc`
+- Special keys: <kbd>Tab</kbd>, <kbd>Ctrl</kbd>, <kbd>Esc</kbd>
 - Navigation: Arrow keys
 
 ## Layout

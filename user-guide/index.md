@@ -28,7 +28,7 @@ Acode is a powerful, lightweight code editor for Android with features like synt
 
 **[Command Palette](./command-palette)**
 
-Quickly access any command with `Ctrl+Shift+P`
+Quickly access any command with <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd>
 
 </div>
 
