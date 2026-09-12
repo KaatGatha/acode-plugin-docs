@@ -125,8 +125,8 @@ You can open multiple terminal sessions as separate tabs. Each tab runs an indep
 
 ## Copy & Paste
 
-- **Copy**: Long-press to select text, then use the copy option or `Ctrl+Shift+C`
-- **Paste**: Long-press and select paste, or use `Ctrl+Shift+V`
+- **Copy**: Long-press to select text, then use the copy option or <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>C</kbd>
+- **Paste**: Long-press and select paste, or use <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>V</kbd>
 
 ## Backup & Restore
 
