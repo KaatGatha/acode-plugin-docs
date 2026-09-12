@@ -107,7 +107,7 @@ const enter = createKeyboardEvent('keydown', {
 Common supported keys include:
 
 - Arrow keys: `ArrowLeft`, `ArrowRight`, `ArrowUp`, `ArrowDown`
-- Special keys: `Enter`, `Tab`, `Backspace`, `Delete`, `Escape`, `Space`
-- Modifier keys: `Shift`, `Control`, `Alt`, `Meta`
+- Special keys: <kbd>Enter</kbd>, <kbd>Tab</kbd>, <kbd>Backspace</kbd>, <kbd>Delete</kbd>, <kbd>Escape</kbd>, <kbd>Space</kbd>
+- Modifier keys: <kbd>Shift</kbd>, <kbd>Control</kbd>, <kbd>Alt</kbd>, <kbd>Meta</kbd>
 - Function keys: `F1`-`F12`
 - Printable characters: `a-z`, `A-Z`, `0-9`, symbols
