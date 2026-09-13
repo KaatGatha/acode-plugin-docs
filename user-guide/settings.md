@@ -25,7 +25,7 @@ You can open the Settings page using any of the following methods:
 | Method              | How                                                                                                            |
 | :------------------ | :------------------------------------------------------------------------------------------------------------- |
 | **Menu**            | Open the menu(<EllipsisVertical :size="16" style="display:inline; vertical-align:middle"/>) → tap **Settings** |
-| **Shortcut**        | Press **`Ctrl` + `,`**                                                                                         |
+| **Shortcut**        | Press **<kbd>Ctrl</kbd> + <kbd>,</kbd>**                                                                                         |
 | **Command Palette** | Search for **"Show Settings"**                                                                                 |
 
 ## Settings Categories

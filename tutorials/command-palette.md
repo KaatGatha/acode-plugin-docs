@@ -14,13 +14,11 @@ The **Command Palette** is essentially a command-line like interface within the 
 
 To open the **Command Palette** in Acode, simply use the following keyboard shortcut:
 
-```
-Ctrl + Shift + P
-```
+<kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd>
 
 Once opened, you’ll see a text input field where you can type the name of the command you're looking for. A list of matching commands will appear, and you can select the desired command to execute it.
 
 ## Steps to Use the Command Palette:
-1. **Open the Palette**: Press `Ctrl + Shift + P` to open the palette.
+1. **Open the Palette**: Press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> to open the palette.
 2. **Search for a Command**: Start typing the name of the command you want to execute (e.g., "Save", "Open", "Format Code", "Save all changes").
-3. **Select and Run**: Use the arrow keys to navigate through the list of commands, and press `Enter` to execute the selected command.
+3. **Select and Run**: Use the arrow keys to navigate through the list of commands, and press <kbd>Enter</kbd> to execute the selected command.

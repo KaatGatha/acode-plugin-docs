@@ -12,9 +12,9 @@ QuickTools is a customizable toolbar that provides quick access to commonly used
 
 QuickTools contains useful symbols and keys that are frequently needed while coding but can be tedious to access on a mobile keyboard, such as:
 
-- Brackets: `( ) [ ] { } < >`
-- Symbols: `; : " ' = + -`
-- Special keys: `Tab`, `Ctrl`, `Esc`
+- Brackets: <kbd>(</kbd> <kbd>)</kbd> <kbd>[</kbd> <kbd>]</kbd> <kbd>{</kbd> <kbd>}</kbd> <kbd><</kbd> <kbd>></kbd>
+- Symbols: <kbd>;</kbd> <kbd>:</kbd> <kbd>"</kbd> <kbd>'</kbd> <kbd>=</kbd> <kbd>+</kbd> <kbd>-</kbd>
+- Special keys: <kbd>Tab</kbd>, <kbd>Ctrl</kbd>, <kbd>Esc</kbd>
 - Navigation: Arrow keys
 
 ## Layout

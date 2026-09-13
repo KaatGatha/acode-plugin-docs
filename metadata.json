@@ -1,6 +1,6 @@
 {
-  "name": "Acode Plugin Docs",
-  "description": "Documentation for creating plugins for Acode editor.",
-  "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+	"name": "Acode Plugin Docs",
+	"description": "Documentation for creating plugins for Acode editor.",
+	"requestFramePermissions": [],
+	"majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
